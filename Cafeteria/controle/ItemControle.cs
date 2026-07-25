@@ -5,16 +5,17 @@ namespace Cafeteria.controle;
 public static class ItemControle
 {
     private static List<Item> CARDAPIO = new List<Item>();
+    private static int _identificador = 1;
 
 
     public static void CadastrarItem(string nome, string descricao, double preco, Tipo tipo)
     {
         if(preco <= 0)
             throw new ArgumentException("Item não pode ser menor ou igual a zero");
-        if (string.IsNullOrEmpty(nome) || string.IsNullOrEmpty(nome))
+        if (string.IsNullOrEmpty(nome) || string.IsNullOrWhiteSpace(nome))
             throw new ArgumentException("O campo nome é obrigatorio");
         
-        CARDAPIO.Add(new Item(CARDAPIO.Count, nome, descricao, preco, tipo));
+        CARDAPIO.Add(new Item(_identificador++, nome, descricao, preco, tipo));
     }
 
     public static void DeletarItem(int id)
