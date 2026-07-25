@@ -1,0 +1,15 @@
+# Saídas de compilação (.NET)
+bin/
+obj/
+
+# Caches e configurações locais do Rider
+.idea/
+*.DotSettings.user
+
+# Caches do Visual Studio
+.vs/
+*.user
+
+# Arquivos locais/sensíveis
+*.env
+appsettings.Local.json
