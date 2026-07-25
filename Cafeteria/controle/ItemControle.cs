@@ -1,0 +1,46 @@
+using Cafeteria.modelo;
+
+namespace Cafeteria.controle;
+
+public static class ItemControle
+{
+    private static List<Item> CARDAPIO = new List<Item>();
+
+
+    public static void CadastrarItem(string nome, string descricao, double preco, Tipo tipo)
+    {
+        if(preco <= 0)
+            throw new ArgumentException("Item não pode ser menor ou igual a zero");
+        if (string.IsNullOrEmpty(nome) || string.IsNullOrEmpty(nome))
+            throw new ArgumentException("O campo nome é obrigatorio");
+        
+        CARDAPIO.Add(new Item(CARDAPIO.Count, nome, descricao, preco, tipo));
+    }
+
+    public static void DeletarItem(int id)
+    {
+       Item itemEncontrado = CARDAPIO.Find(x => x.Id == id) ?? throw new ArgumentException("Item não encontrado");
+       CARDAPIO.Remove(itemEncontrado);
+    }
+
+    public static  List<Item> ListarItems()
+    {
+        return new List<Item>(CARDAPIO);
+    }
+
+    public static void AlterarItem(Item item)
+    {
+        Item itemEncontrado = CARDAPIO.Find(x => x.Id == item.Id) ?? throw new ArgumentException("Item não encontrado");
+        itemEncontrado.Nome = item.Nome;
+        itemEncontrado.Descricao = item.Descricao;
+        itemEncontrado.Preco = item.Preco;
+        itemEncontrado.Tipo = item.Tipo;
+    }
+
+    public static Item PegarItem(int id)
+    {
+        Item itemEncontrado = CARDAPIO.Find(x => x.Id == id) ?? throw new ArgumentException("Item não encontrado");
+        return new Item(itemEncontrado.Id, itemEncontrado.Nome, itemEncontrado.Descricao,itemEncontrado.Preco, itemEncontrado.Tipo);
+    }
+    
+}
