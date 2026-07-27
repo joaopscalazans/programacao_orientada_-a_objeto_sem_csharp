@@ -33,6 +33,8 @@ public static class ItemControle
     public static void AlterarItem(Item item)
     {
         Item itemEncontrado = CARDAPIO.Find(x => x.Id == item.Id) ?? throw new ArgumentException("Item não encontrado");
+        if (string.IsNullOrEmpty(item.Nome) || string.IsNullOrWhiteSpace(item.Nome))
+            throw new ArgumentException("O campo nome é obrigatorio");
         itemEncontrado.Nome = item.Nome;
         itemEncontrado.Descricao = item.Descricao;
         itemEncontrado.Preco = item.Preco;
