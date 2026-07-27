@@ -6,6 +6,7 @@ public class Item
     public string Nome { get; set; }
     public string Descricao { get; set; }  
     public double  Preco { get; set; }
+    public bool EstaDisponivel { get; private set; }
     public Tipo Tipo { get; set; }
 
     public Item()
@@ -19,5 +20,23 @@ public class Item
         Descricao = descricao;
         Preco = preco;
         Tipo = tipo;
+        EstaDisponivel = true;
+    }
+
+    public void MudarDisponibilidade()
+    {
+        if (EstaDisponivel)
+        {
+            EstaDisponivel = false;
+        }
+        else
+        {
+            EstaDisponivel = true;
+        }
+    }
+
+    public override string ToString()
+    {
+        return $"| {Id,-2} | {Nome,-15} | {Descricao,-15} | {Preco,-10:C2} | {Tipo,-7} |";
     }
 }

@@ -28,6 +28,7 @@ public static class ItemControle
     {
         return new List<Item>(CARDAPIO);
     }
+    
 
     public static void AlterarItem(Item item)
     {
@@ -36,6 +37,19 @@ public static class ItemControle
         itemEncontrado.Descricao = item.Descricao;
         itemEncontrado.Preco = item.Preco;
         itemEncontrado.Tipo = item.Tipo;
+    }
+
+    public static void MudarDisponibilidade(int id)
+    {
+        Item itemEncontrado = CARDAPIO.Find(x => x.Id == id) ?? throw new ArgumentException("Item não encontrado");
+        itemEncontrado.MudarDisponibilidade();
+    }
+
+    public static double AplicarDesconto(int id,double procentagem)
+    {
+        if (procentagem > 30) throw new ArgumentException("Não são permitidos descontos acima de 30%");
+        Item itemEncontrado = CARDAPIO.Find(x => x.Id == id) ?? throw new ArgumentException("Item não encontrado");
+        return itemEncontrado.Preco - ((procentagem / 100) * itemEncontrado.Preco);
     }
 
     public static Item PegarItem(int id)
