@@ -1,4 +1,5 @@
-﻿using Cafeteria.controle;
+﻿using System.Xml.Schema;
+using Cafeteria.controle;
 using Cafeteria.modelo;
 
 namespace Cafeteria;
@@ -32,15 +33,110 @@ class Program
                     ListarCardapio();
                     break;
                 case "3":
+                    AlterarItem();
                     break;
                 case "4":
+                    AplicarDesconto();
                     break;
                 case "5":
+                    PauseReativar();
                     break;
                 case "6":
+                    Remove();
                     break;
-                default: break;
+                default: Console.WriteLine("Opção invalida");
+                    Console.ReadKey(); break;
             }
+        }
+    }
+
+    public static void Remove()
+    {
+        try
+        {
+            Console.WriteLine("Qual é o id do item");
+            ItemControle.DeletarItem(int.TryParse(Console.ReadLine(), out int id) ? id : throw new Exception("Valor invalido"));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            Console.ReadKey();
+        }
+    }
+
+    public static void PauseReativar()
+    {
+        try
+        {
+            Console.WriteLine("Qual é o id do item:");
+            ItemControle.MudarDisponibilidade(int.TryParse(Console.ReadLine(), out int id) ? id : throw new Exception("Valor invalido"));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            Console.ReadKey();
+        }
+    }
+
+    public static void AplicarDesconto()
+    {
+        try
+        {
+            Console.Write("Qual o id do item: ");
+            int id = int.TryParse(Console.ReadLine(), out int valor) ? valor : throw new Exception("Valor invalido");
+            Console.Write("Desconto: ");
+            double desconto = double.TryParse(Console.ReadLine(), out double val)
+                ? val
+                : throw new Exception("Valor invalido");
+            double vari = ItemControle.AplicarDesconto(id, val);
+            Console.Write($"O valor do desconto vai ser: {vari} ");
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        Console.ReadKey();
+    }
+
+    public static void AlterarItem()
+    {
+        Console.WriteLine("Alterar item");
+        try
+        {
+            Console.WriteLine("Qual o id do item:");
+            var item = ItemControle.PegarItem(int.TryParse(Console.ReadLine(), out int id) ? id : throw new Exception("Valor invalido"));
+            Console.WriteLine("Você quer alterar o Nome? (s/n)");
+            if (Console.ReadLine() == "s")
+            {
+                Console.Write("Nome: ");
+                item.Nome  = Console.ReadLine();
+            }
+            Console.WriteLine("Você quer alterar o Descrição? (s/n)");
+            if (Console.ReadLine() == "s")
+            {
+                Console.WriteLine("Descricao: ");
+                item.Descricao  = Console.ReadLine();
+            }
+            Console.WriteLine("Você quer alterar o Preço? (s/n)");
+            if (Console.ReadLine() == "s")
+            {
+                Console.WriteLine("Preco: ");
+                item.Preco = double.TryParse(Console.ReadLine(), out double valor) ? valor : throw new Exception("Valor invalido");
+            }
+            Console.WriteLine("Você quer alterar o Tipo? (s/n)");
+            if (Console.ReadLine() == "s")
+            {
+                Console.WriteLine("Tipo: ");
+                item.Tipo = MenuInterrativoTipo();
+            }
+            ItemControle.AlterarItem(item);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            Console.ReadKey();
         }
     }
 

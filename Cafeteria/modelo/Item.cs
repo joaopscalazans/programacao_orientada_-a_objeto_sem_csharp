@@ -37,6 +37,6 @@ public class Item
 
     public override string ToString()
     {
-        return $"| {Id,-2} | {Nome,-15} | {Descricao,-15} | {Preco,-10:C2} | {Tipo,-7} |";
+        return $"| {Id,-2} | {Nome,-15} | {Descricao,-15} | {Preco,-10:C2} | {Tipo,-7} | {((EstaDisponivel == true) ? "Disponivel" : "indisponivel"), -5}";
     }
 }
